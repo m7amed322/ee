@@ -28,8 +28,8 @@ app.listen(port,()=>{
     // CustomerService.checkout()
 
     //all good use case
-    // CustomerService.addToCart(Customer,["cheese"],[1]);
-    // CustomerService.checkout()
+    CustomerService.addToCart(Customer,["cheese"],[1]);
+    CustomerService.checkout()
 
     //length must be equal
     // CustomerService.addToCart(Customer,[],[2]);
@@ -47,8 +47,8 @@ app.listen(port,()=>{
     // the sum in the expirationDate in productt.js file inside 
     // model folder to a substraction so it is expired 14 days ago 
     //right now it is sum so no expiredDate will happen because it is agter 14 days from now
-    CustomerService.addToCart(Customer,["cheese"],[1]);
-    CustomerService.checkout()
+    // CustomerService.addToCart(Customer,["cheese"],[1]);
+    // CustomerService.checkout()
     console.log("after")
     console.log(Customer);
     console.log(Cart);
