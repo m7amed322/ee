@@ -46,7 +46,7 @@ app.listen(port,()=>{
     //  expired product use case notice: i have just changed 
     // the sum in the expirationDate in productt.js file inside 
     // model folder to a substraction so it is expired 14 days ago 
-    //right now it is sum so no expiredDate will happen because it is agter 14 days from now
+    //right now it is sum so no expiredDate will not happen because it is after 14 days from now
     // CustomerService.addToCart(Customer,["cheese"],[1]);
     // CustomerService.checkout()
     console.log("after")
