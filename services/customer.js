@@ -1,48 +1,87 @@
-const Cart= require("../model/cart")
-const Product = require("../model/product")
+const Cart = require("../model/cart");
+const Product = require("../model/product");
+const Customer = require("../model/customer");
 const CustomerService = {
   addToCart: (Customer, products, quantity) => {
     if (!Array.isArray(products)) {
-      throw new Error("products must be an array");
+      console.log("products must be an array");
+      return;
     }
-    const paidAmount = 0;
-    const totalWeights = 0;
-    const index = 0;
-    products.map((product) => {
-      if (!Product.find((product) => product.name === product)) {
-        throw new Error("not found");
+    if (products.length !== quantity.length) {
+      console.log("length must be equal");
+      return;
+    }
+    let paidAmount = 0;
+    let totalWeights = 0;
+    let index = 0;
+    products.forEach((product) => {
+      const productName = product;
+      const productQuantity = quantity[index];
+      const productt = Product.find((x) => x.name === productName);
+      if (!productt) {
+        console.log("not found");
+        console.log(productName);
+        return;
       }
-      const productt = Product.find((product) => {
-        product.name === product;
-      });
-      const currentDate = new Date;
-      currentDate.setHours(0, 0, 0, 0);
-      productt.expirationDate.setHours(0, 0, 0, 0);
-      if(currentDate<expirationDate){
-        throw newError ("date is expired");
+      if (productt.expirationDate) {
+        if (new Date(Date.now()) > productt.expirationDate) {
+          console.log("this product is expired");
+          return;
+        }
       }
-      paidAmount += productt.price;
+      if (productt.quantity < productQuantity) {
+        console.log("order out of stock");
+        return;
+      }
+      paidAmount += productt.price * productQuantity;
       if (productt.weight) {
-        totalWeights += productt.weight;
+        totalWeights += productt.weight * productQuantity;
       }
       if (productt.quantity == 0) {
-        throw new Error("out of stack");
+        console.log("out of stack");
+        return;
       }
-      const result = Customer.balance - paidAmount;
-      if (result < 0) {
-        throw new Error("inSufficient balance");
-      }
-      productt.quantity - quantity[index];
+
+      productt.quantity -= productQuantity;
       index++;
     });
-    Cart.push({
+    const cartProduct = {
       Customer,
       products,
       quantity,
       paidAmount,
       totalWeights,
-    });
-    console.log(paidAmount);
+    };
+    Cart.push(cartProduct);
+    Customer.cart = cartProduct;
+  },
+  checkout: () => {
+    if (Customer.balance < Customer.cart.paidAmount) {
+      console.log("insuffecient balance");
+      return;
+    }
+    Customer.balance -= Customer.cart.paidAmount;
+    if (Customer.cart.products.length > 0) {
+      for (let i = 0; i < Customer.cart.products.length; i++) {
+        const product = Product.find((x) => x.name === Customer.cart.products[i]);
+        console.log(
+          `${Customer.cart.quantity[i]}x  ${Customer.cart.products[i]}                    ${
+            product.price * Customer.cart.quantity[i]
+          }`
+        );
+      }
+      console.log(`
+        Subtotal              ${Customer.cart.paidAmount}
+        Shipping              12
+        Amount                ${12 + Customer.cart.paidAmount}`);
+      Customer.cart = null;
+      if(Cart.indexOf(Customer.cart)!= -1){
+        Cart.splice(Cart.indexOf(Customer.cart), 1);
+      }
+    } else {
+      console.log("cart is empty");
+      return;
+    }
   },
 };
-module.exports=  CustomerService
+module.exports = CustomerService;

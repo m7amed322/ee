@@ -27,7 +27,7 @@ const Product = [
     name:"cheese",
     quantity:6,
     weight:200,
-    expirationDate:new Date(2025,7,19),
+    expirationDate:new Date(Date.now() + (14*24*60*60*1000)),
     price:60,
     shippable:true
 },

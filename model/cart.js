@@ -12,5 +12,5 @@
 // const Cart = mongoose.model("customer", customerSchema);
 
 //this is a simulate for cart collection
-const Cart = [];
+const Cart =[];
 module.exports = Cart;

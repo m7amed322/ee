@@ -14,10 +14,14 @@ res.json({
     message:"our first endpoint"
 });
 //the lenght of array of quantity must be equal to the length of array products
-CustomerService.addToCart(Customer,["cheese","TV"],[1,2]);
-console.log(Product,Cart,Customer);
+
 })
 const port = process.env.PORT || 1000
 app.listen(port,()=>{
     winston.info(`listening to port ${port}...`)
+    CustomerService.addToCart(Customer,["cheese"],[1]);
+    CustomerService.checkout()
+    console.log(Customer);
+    console.log(Cart);
+    console.log(Product)
 })
