@@ -19,8 +19,37 @@ res.json({
 const port = process.env.PORT || 1000
 app.listen(port,()=>{
     winston.info(`listening to port ${port}...`)
+    console.log("before")
+    console.log(Customer)
+    console.log(Cart);
+    console.log(Product)
+    //insuuficient balance use case
+    // CustomerService.addToCart(Customer,["cheese"],[2]);
+    // CustomerService.checkout()
+
+    //all good use case
+    // CustomerService.addToCart(Customer,["cheese"],[1]);
+    // CustomerService.checkout()
+
+    //length must be equal
+    // CustomerService.addToCart(Customer,[],[2]);
+    // CustomerService.checkout()
+
+    //order out of stack
+    // CustomerService.addToCart(Customer,["cheese"],[8]);
+    // CustomerService.checkout()
+
+    //not found use case product because not in the list
+    // CustomerService.addToCart(Customer,["iphone"],[2]);
+    // CustomerService.checkout()
+
+    //  expired product use case notice: i have just changed 
+    // the sum in the expirationDate in productt.js file inside 
+    // model folder to a substraction so it is expired 14 days ago 
+    //right now it is sum so no expiredDate will happen because it is agter 14 days from now
     CustomerService.addToCart(Customer,["cheese"],[1]);
     CustomerService.checkout()
+    console.log("after")
     console.log(Customer);
     console.log(Cart);
     console.log(Product)
